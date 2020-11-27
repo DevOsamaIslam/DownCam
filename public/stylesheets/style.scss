@@ -1,0 +1,69 @@
+@import './sass/materialize.scss';
+
+body {
+  height: 100vh;
+  background: black;
+  color: white;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.logo {
+  @extend .col;
+  @extend .m6;
+  @extend .s12;
+}
+
+
+.upload-container {
+  display: flex;
+  flex-direction: column;
+  @extend .col;
+  @extend .m6;
+  @extend .s12;
+  border: 5px solid $primary-color;
+  padding: 0 !important;
+  min-height: 50vh !important;
+  
+  textarea, input {
+    color: white;
+  }
+
+  #tab-url {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: stretch;
+    flex: 1;
+  }
+
+  #tab-freetext {
+    flex-direction: column;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    flex: 1;
+    textarea.materialize-textarea {
+      flex: 1;
+      height: 100%;
+      max-height: 400px;
+      overflow-y: scroll;
+    }
+  }
+
+  #tab-file {
+    flex-direction: column;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    flex: 1;
+    .progress-bar {
+      .progress {
+        background: $secondary-color;
+        .determinate {
+          background: $primary-color;
+        }
+      } 
+    }
+  }
+}
+

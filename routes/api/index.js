@@ -19,12 +19,18 @@ router.post('/url/', (req, res, next) => {
 router.post('/text', (req, res, next) => {
 	let text = req.body.text
 	if(!text || !text.trim()) return res.status(404)
+	if(text.length > 10000)
+		return res.status(413)
 	text = text.replace(/\n/g, '\\n')
+	text = text.replace(/&/g, '&amp;')
+	text = text.replace(/</g, '&lt;')
+	text = text.replace(/>/g, '&gt;')
+
 	Text.create({
 		text
 	}, (err, data) => {
 		if (err) return res.status(500)
-		let url = `//localhost:3000/api/text/${data.id}`
+		let url = `http://${req.hostname}/api/text/${data.id}`
 		QR.toDataURL(url, (err, qrcode) => {
 			if (err) return next(E.InternalServerError())
 			res.json({
@@ -40,13 +46,16 @@ router.get('/text/:id', (req, res, next) => {
 	let id = req.params.id
 	id = id.replace(/\s/g, '')
 	if (!id) return next(E.NotAcceptable())
-	Text.findByIdAndRemove(id, (err, data) => {
+	Text.findByIdAndDelete(id, (err, data) => {
 		let returned = ''
+		let found = true
 		if (err) return next(E.NotAcceptable())
-		if (!data) returned = 'Text not found or expired :('
+		if (!data) 
+			found = false
 		else returned = data.text
 		res.render('text', {
-			data: returned
+			data: returned,
+			found
 		})
 	})
 })
@@ -62,10 +71,8 @@ router.post('/upload', (req, res) => {
 	if (!file) return res.status(404)
 
 	// if file exists
-	let ext = file.mimetype.split('/')[1]
 	File.create({
-		file: file.name,
-		ext
+		file: file.name
 	}, (err, data) => {
 		// if something went wrong
 		if (err) return res.status(500)
@@ -73,11 +80,11 @@ router.post('/upload', (req, res) => {
 		// if database entry created
 		if (data) {
 			// move the uploaded file into that folder
-			file.mv(`./public/uploads/${data.id}.${ext}`, (err) => {
+			file.mv(`./public/uploads/${data.id}_${file.name}`, (err) => {
 				// if something went wrong while moving the file
 				if (err) return res.status(500)
 				// if file moved, generate a new QR code to the address of the file
-				let url = `//localhost:3000/api/file/${data.id}`
+				let url = `http://${req.hostname}/api/file/${data.id}`
 				QR.toDataURL(url, (err, qrcode) => {
 					// if something went wrong while generating the QR code
 					if (err) return res.status(500)
@@ -92,15 +99,15 @@ router.post('/upload', (req, res) => {
 	})
 })
 
-
 router.get('/file/:id', (req, res, next) => {
 	let id = req.params.id
 	File.findByIdAndRemove(id, (err, data) => {
 		// failed to remove
 		if(err) return next(E.InternalServerError())
-
+		if(!data) return next(E.NotFound())
 		// return the removed item
-		res.download(`./public/uploads/${data.id}.${data.ext}`)
+		res.download(`./public/uploads/${data.id}_${data.file}`)
 	})
 })
+
 export default router

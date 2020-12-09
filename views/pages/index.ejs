@@ -1,29 +1,29 @@
-<div class="container">
-  <div class="row">
-    <div class="upload-container">
-      <ul class="tabs">
-        <li class="tab col m4 s4"><a class="active" href="#tab-url">URL</a></li>
-        <li class="tab col m4 s4"><a href="#tab-freetext">Text</a></li>
-        <li class="tab col m4 s4"><a href="#tab-file">File</a></li>
-      </ul>
-
-      <!-- URL tab -->
-      <div id="tab-url" class="col s12">
-        <%- include('../partials/components/urlTab') %> 
-      </div>
-
-      <!-- Free Text tab -->
-      <div id="tab-freetext" class="col s12">
-        <%- include('../partials/components/textTab') %> 
-      </div>
-
-      <!-- File Upload tab -->
-      <div id="tab-file" class="col s12">
-        <%- include('../partials/components/fileTab') %> 
-      </div>
+  <div class="logo">
+    <img src="/images/assets/logo.svg" alt="">
+  </div>
+  
+  <div class="content-area">
+  <ul class="tabs">
+    <li class="tab"><a class="active" href="#tab-url"><%= language.contents.tabs.url.tabTitle %></a></li>
+    <li class="tab"><a href="#tab-freetext"><%= language.contents.tabs.text.tabTitle %></a></li>
+    <li class="tab"><a href="#tab-file"><%= language.contents.tabs.file.tabTitle %></a></li>
+  </ul>
+  <div class="upload-container">
+  
+    <!-- URL tab -->
+    <div id="tab-url" class="">
+      <%- include('../partials/components/urlTab') %>
     </div>
-    <div class="logo">
-      <img class="responsive-img" src="/images/assets/logo.png" alt="">
+  
+    <!-- Free Text tab -->
+    <div id="tab-freetext" class="">
+      <%- include('../partials/components/textTab') %>
     </div>
+  
+    <!-- File Upload tab -->
+    <div id="tab-file" class="">
+      <%- include('../partials/components/fileTab') %>
+    </div>
+  
   </div>
 </div>

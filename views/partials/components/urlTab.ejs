@@ -1,6 +1,8 @@
-<div class="input-field">
-  <input type="text" id="url-field">
-  <label for="url-field">URL</label>
+<div class="tab-wrapper">
+  <div class="input-field">
+    <input type="text" id="url-field">
+    <label for="url-field"><%= language.contents.tabs.url.placeholder %></label>
+  </div>
+  <div class="qrcode-wrapper url"></div>
+  <a id="submit-url" href="#" class="waves-effect waves-light btn"><%= language.contents.submitButton %></a>
 </div>
-<div class="qrcode-wrapper url" style="display: none;"></div>
-<a id="submit-url" href="#" class="waves-effect waves-light btn">Drop</a>

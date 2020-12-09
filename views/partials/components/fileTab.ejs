@@ -1,19 +1,21 @@
-<form>
-  <div class="file-field input-field">
-    <div class="btn">
-      <span>File</span>
-      <input type="file" name="file">
+<div class="tab-wrapper">
+  <form>
+    <div class="file-field input-field">
+      <div class="btn">
+        <span><%= language.contents.tabs.file.addButton %></span>
+        <input type="file" name="file">
+      </div>
+      <div class="file-path-wrapper">
+        <input class="file-path validate" type="text" placeholder="<%= language.contents.tabs.file.placeholder %>">
+      </div>
     </div>
-    <div class="file-path-wrapper">
-      <input class="file-path validate" type="text" placeholder="File must be below 30 MB">
+  </form>
+  <div class="progress-bar" style="display: none;">
+    <div class="progress">
+      <div class="determinate" style="width: 0%"></div>
     </div>
+    <span class="right"><span id="progress-value">0%</span> <%= language.contents.tabs.file.progressText %></span>
   </div>
-</form>
-<div class="progress-bar" style="display: none;">
-  <div class="progress">
-    <div class="determinate" style="width: 0%"></div>
-  </div>
-  <span class="right"><span id="progress-value">0%</span> done..</span>
+  <div class="qrcode-wrapper"></div>
+  <a id="submit-file" href="#" class="waves-effect waves-light btn"><%= language.contents.submitButton %></a>
 </div>
-<div class="qrcode-wrapper" style="display: none;"></div>
-<a id="submit-file" href="#" class="waves-effect waves-light btn">Drop</a>

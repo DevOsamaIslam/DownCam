@@ -11,6 +11,10 @@ import favicon from 'serve-favicon'
 import sassMiddleware from 'node-sass-middleware'
 import morgan from 'morgan'
 import rfs from 'rotating-file-stream'
+import dotenv from 'dotenv'
+import locale from 'express-locale'
+
+dotenv.config()
 
 const __dirname = dirname(fileURLToPath(
 	import.meta.url))
@@ -50,7 +54,8 @@ export default (express, app) => {
 		stream: accessLogStream
 	}))
 
-
+	// locale middleware
+	app.use(locale())
 	// send static variables with every request
 	app.use((req, res, next) => {
 		res.locals.appName = 'DownCam'

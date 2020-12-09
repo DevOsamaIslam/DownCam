@@ -1,15 +1,39 @@
-<div class="container">
-  <div class="row">
-    <div class="upload-container">
-      <h3>Shared Text</h3>
-      <div class="container">
-        <p><%- data.replace(/\\n/g, '<br>') %></p>
+<div class="logo">
+  <img src="/images/assets/logo.svg" alt="">
+</div>
+
+<div class="content-area">
+  <h3>Shared Text</h3>
+  <div class="container">
+    <div class="row">
+      <p id="text-to-copy" class="col m11"><%- locals.data ? locals.data.replace(/\\n/g, '<br>') : 'Text not found or expired :(' %></p>
+      <div class="col m1">
+        <button class="btn btn-floating waves-effect center" id="copy" style="display: none;">
+          <i class="material-icons">content_copy</i>
+        </button>
       </div>
-    </div>
-
-
-    <div class="logo">
-      <img class="responsive-img" src="/images/assets/logo.png" alt="">
     </div>
   </div>
 </div>
+  <% if (locals.data) { %>
+<script>
+  let copyButton = document.querySelector('#copy')
+  copyButton.style.display = 'initial'
+  copyButton.addEventListener('click', () => {
+      let text = document.querySelector('#text-to-copy')
+      let tempText = document.createElement('textarea')
+      tempText.value = `<%- data.replace(/\\n/g, '\n') %>`
+      document.body.appendChild(tempText)
+
+      tempText.select();
+      tempText.setSelectionRange(0, 99999);
+
+      document.execCommand("copy");
+      document.body.removeChild(tempText)
+
+      M.toast({
+        html: 'Copied to clipboard!'
+      })
+    }) 
+</script>
+  <% } %>

@@ -11,8 +11,6 @@ const options = {
 	}
 }
 
-const model = new mongoose.model('Text', mongoose.Schema(options))
-let days = parseInt(30 *24*60*60*1000, 10)
-model.deleteMany({ dateCreated: { $lt: new Date(Date.now() - days) }})
+const model = mongoose.model('Text', new mongoose.Schema(options))
 
 export default model

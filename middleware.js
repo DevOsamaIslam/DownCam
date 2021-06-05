@@ -11,10 +11,10 @@ import favicon from 'serve-favicon'
 import sassMiddleware from 'node-sass-middleware'
 import morgan from 'morgan'
 import rfs from 'rotating-file-stream'
-import dotenv from 'dotenv'
+// import dotenv from 'dotenv'
 import locale from 'express-locale'
 
-dotenv.config()
+// dotenv.config()
 
 const __dirname = dirname(fileURLToPath(
 	import.meta.url))

@@ -1,12 +1,11 @@
 import mongoose from 'mongoose'
 
 export const databaseConnect = () => {
-  mongoose.connect('mongodb://127.0.0.1:27017/downcam', {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-    useCreateIndex: true
-  })
-    .then(() => console.log('connected to DB'))
-    .catch(err => console.error(err))
+	mongoose.connect('mongodb+srv://adminuser:wxbSeRZT6N8aTCo4@cluster0.hrr6k.mongodb.net/myFirstDatabase?retryWrites=true&w=majority', {
+			useNewUrlParser: true,
+			useUnifiedTopology: true,
+			useCreateIndex: true
+		})
+		.then(() => console.log('connected to DB'))
+		.catch(err => console.error(err))
 }
-

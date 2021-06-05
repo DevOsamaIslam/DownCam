@@ -1,6 +1,6 @@
 import express from 'express'
 const router = express.Router()
-import Language from '../model/Language.js'
+import Language from '../model/language.js'
 
 let defaultLang = {
 	lang: 'en',
@@ -19,8 +19,8 @@ let defaultLang = {
 			file: {
 				tabTitle: 'File',
 				placeholder: 'File size must be below 30 MB',
-				addButton : 'File',
-				progressText : 'done..'
+				addButton: 'File',
+				progressText: 'done..'
 			}
 		},
 		submitButton: 'Drop'
@@ -30,8 +30,12 @@ let defaultLang = {
 /* GET home page. */
 router.get('/', (req, res) => {
 	let accepted = req.locale.language
-	Language.findOne({ lang: accepted }, (err, data) => {
-		res.render('index', {language: data || defaultLang})
+	Language.findOne({
+		lang: accepted
+	}, (err, data) => {
+		res.render('index', {
+			language: data || defaultLang
+		})
 	})
 })
 

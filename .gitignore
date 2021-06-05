@@ -91,7 +91,8 @@ dist
 # https://nextjs.org/blog/next-9-1#public-directory-support
 # public
 
-public/stylesheets/style.css
+public/stylesheets/style.scss
+public/stylesheets/sass
 
 public/uploads/
 

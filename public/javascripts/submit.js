@@ -1,5 +1,5 @@
 let submitURL = document.querySelector('#submit-url')
-if(submitURL)
+if (submitURL)
 	submitURL.addEventListener('click', () => {
 		let url = document.querySelector('#tab-url input').value
 		url = url.replace(/\s/g, '')
@@ -11,14 +11,14 @@ if(submitURL)
 		url = encodeURIComponent(url)
 		// Process url upload
 		fetch('/api/url/', {
-			method: 'POST',
-			headers: {
-				'Content-Type': 'Application/json'
-			},
-			body: JSON.stringify({
-				url
+				method: 'POST',
+				headers: {
+					'Content-Type': 'Application/json'
+				},
+				body: JSON.stringify({
+					url
+				})
 			})
-		})
 			.then(res => res.json())
 			.then(data => {
 				let wrapper = document.querySelector('.qrcode-wrapper.url')
@@ -32,7 +32,7 @@ if(submitURL)
 
 
 let submitText = document.querySelector('#submit-freetext')
-if(submitText)
+if (submitText)
 	submitText.addEventListener('click', () => {
 		let text = document.querySelector('#tab-freetext textarea').value
 		if (!text) {
@@ -45,14 +45,14 @@ if(submitText)
 		}
 		// Process text upload
 		fetch('/api/text/', {
-			method: 'POST',
-			headers: {
-				'Content-Type': 'Application/json'
-			},
-			body: JSON.stringify({
-				text
+				method: 'POST',
+				headers: {
+					'Content-Type': 'Application/json'
+				},
+				body: JSON.stringify({
+					text
+				})
 			})
-		})
 			.then(res => res.json())
 			.then(data => {
 				let wrapper = document.querySelector('.qrcode-wrapper.freetext')
@@ -72,19 +72,19 @@ if(submitText)
 
 
 let tabFile = document.querySelector('#tab-file')
-if(tabFile)
+if (tabFile)
 	tabFile.querySelector('#submit-file').addEventListener('click', e => {
 		e.preventDefault()
-		
+
 		let form = tabFile.querySelector('form')
 		let fileData = form.querySelector('input[type=file]')
-		
+
 		// check file size
-		if(!fileData.files[0]) {
+		if (!fileData.files[0]) {
 			alert('No file selected')
 			return
 		}
-		if(fileData.files[0].size > (1024 * 1024 * 30)) {
+		if (fileData.files[0].size > (1024 * 1024 * 30)) {
 			alert('File size is above 30 MB')
 			return
 		}
@@ -99,7 +99,7 @@ if(tabFile)
 			progressContainer.style.display = 'initial'
 			let total = e.total
 			let loaded = e.loaded
-			let percent = e.lengthComputable ? (loaded/total) * 100 : 0
+			let percent = e.lengthComputable ? (loaded / total) * 100 : 0
 			progressBar.style.width = `${percent.toFixed(1)}%`
 			progressText.innerHTML = `${Math.round(percent)}%`
 		})
@@ -108,11 +108,10 @@ if(tabFile)
 		let data = new FormData(form)
 
 		request.send(data)
-		request.onload = function() {
-			if(this.status === 413) {
+		request.onload = function () {
+			if (this.status === 413) {
 				alert('File too large')
-			}
-			else if (this.status === 200) {
+			} else if (this.status === 200) {
 				let data = JSON.parse(this.response)
 				progressContainer.style.display = 'none'
 				let wrapper = tabFile.querySelector('.qrcode-wrapper')
@@ -120,7 +119,7 @@ if(tabFile)
 				let img = document.createElement('img')
 				img.src = data.qrcode
 				wrapper.appendChild(img)
-				
+
 				// let link = document.createElement('a')
 				// link.href = data.url
 				// link.target = '_blank'

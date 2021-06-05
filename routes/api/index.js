@@ -6,20 +6,23 @@ import Text from '../../model/Text.js'
 import File from '../../model/File.js'
 import upload from 'express-fileupload'
 
+let port = 3000
+
 router.post('/url/', (req, res, next) => {
-	let url = req.body.url
+	let url = decodeURIComponent(req.body.url)
 	url = url.replace(/\s/g, '')
 	if (!url) return next(E.NotAcceptable())
 	QR.toDataURL(url, (err, data) => {
 		if (err) return next(E.InternalServerError())
+		console.log(url);
 		res.json(data)
 	})
 })
 
 router.post('/text', (req, res, next) => {
 	let text = req.body.text
-	if(!text || !text.trim()) return res.status(404)
-	if(text.length > 10000)
+	if (!text || !text.trim()) return res.status(404)
+	if (text.length > 10000)
 		return res.status(413)
 	text = text.replace(/\n/g, '\\n')
 	text = text.replace(/&/g, '&amp;')
@@ -30,7 +33,7 @@ router.post('/text', (req, res, next) => {
 		text
 	}, (err, data) => {
 		if (err) return res.status(500)
-		let url = `http://${req.hostname}/api/text/${data.id}`
+		let url = `http://${req.hostname}:${port}/api/text/${data.id}`
 		QR.toDataURL(url, (err, qrcode) => {
 			if (err) return next(E.InternalServerError())
 			res.json({
@@ -50,7 +53,7 @@ router.get('/text/:id', (req, res, next) => {
 		let returned = ''
 		let found = true
 		if (err) return next(E.NotAcceptable())
-		if (!data) 
+		if (!data)
 			found = false
 		else returned = data.text
 		res.render('text', {
@@ -62,10 +65,10 @@ router.get('/text/:id', (req, res, next) => {
 
 router.use(upload())
 router.post('/upload', (req, res) => {
-	let maxSize = 30 *1024*1024
-	if(!req.files) return res.status(404)
+	let maxSize = 30 * 1024 * 1024
+	if (!req.files) return res.status(404)
 	let file = req.files.file
-	if(file.size > maxSize)
+	if (file.size > maxSize)
 		return res.status(413)
 	// check if file not uploaded
 	if (!file) return res.status(404)
@@ -84,7 +87,7 @@ router.post('/upload', (req, res) => {
 				// if something went wrong while moving the file
 				if (err) return res.status(500)
 				// if file moved, generate a new QR code to the address of the file
-				let url = `http://${req.hostname}/api/file/${data.id}`
+				let url = `http://${req.hostname}:${port}/api/file/${data.id}`
 				QR.toDataURL(url, (err, qrcode) => {
 					// if something went wrong while generating the QR code
 					if (err) return res.status(500)
@@ -103,8 +106,8 @@ router.get('/file/:id', (req, res, next) => {
 	let id = req.params.id
 	File.findByIdAndRemove(id, (err, data) => {
 		// failed to remove
-		if(err) return next(E.InternalServerError())
-		if(!data) return next(E.NotFound())
+		if (err) return next(E.InternalServerError())
+		if (!data) return next(E.NotFound())
 		// return the removed item
 		res.download(`./public/uploads/${data.id}_${data.file}`)
 	})

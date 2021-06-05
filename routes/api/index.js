@@ -20,6 +20,7 @@ router.post('/url/', (req, res, next) => {
 })
 
 router.post('/text', (req, res, next) => {
+	let baseURL = req.app.get('env') === 'production' ? req.hostname : `${req.hostname}:3000`
 	let text = req.body.text
 	if (!text || !text.trim()) return res.status(404)
 	if (text.length > 10000)
@@ -33,7 +34,7 @@ router.post('/text', (req, res, next) => {
 		text
 	}, (err, data) => {
 		if (err) return res.status(500)
-		let url = `http://${req.hostname}:${port}/api/text/${data.id}`
+		let url = `http://${baseURL}/api/text/${data.id}`
 		QR.toDataURL(url, (err, qrcode) => {
 			if (err) return next(E.InternalServerError())
 			res.json({

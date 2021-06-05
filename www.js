@@ -4,7 +4,7 @@
  * Module dependencies.
  */
 
-import app from '../app.js'
+import app from './app.js'
 import debug from 'debug'
 debug('downcam:server')
 import http from 'http'
@@ -59,9 +59,9 @@ function onError(error) {
     throw error
   }
 
-  var bind = typeof port === 'string'
-    ? 'Pipe ' + port
-    : 'Port ' + port
+  var bind = typeof port === 'string' ?
+    'Pipe ' + port :
+    'Port ' + port
 
   // handle specific listen errors with friendly messages
   switch (error.code) {
@@ -84,8 +84,8 @@ function onError(error) {
 
 function onListening() {
   var addr = server.address()
-  var bind = typeof addr === 'string'
-    ? 'pipe ' + addr
-    : 'port ' + addr.port
+  var bind = typeof addr === 'string' ?
+    'pipe ' + addr :
+    'port ' + addr.port
   debug('Listening on ' + bind)
 }

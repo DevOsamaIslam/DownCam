@@ -34,14 +34,22 @@
 // 1. Colors
 // ==========================================================================
 
-$primary-color: #330077 !default;
+// $primary-color: #290909 !default;
+// $primary-color: #1B2F40 !default;
+// $primary-color: #4B84B3 !default;
+$primary-color: #001411 !default;
+// $primary-color: #330077 !default;
 $primary-color-light: lighten($primary-color, 15%) !default;
 $primary-color-dark: darken($primary-color, 15%) !default;
 
-$secondary-color: #C4C000 !default;
+// $secondary-color: #3B0E0E !default;
+$secondary-color: #611C00 !default;
+// $secondary-color: #FFD087 !default;
+// $secondary-color: #8A3E00 !default;
+// $secondary-color: #C4C000 !default;
 $success-color: color("green", "base") !default;
 $error-color: color("red", "base") !default;
-$link-color: #775500 !default;
+$link-color: #0E7521!default;
 
 
 // 2. Badges

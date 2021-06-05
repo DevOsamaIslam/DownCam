@@ -2,9 +2,11 @@
 @import url('https://fonts.googleapis.com/css2?family=Markazi+Text:wght@500&display=swap');
 
 html {
-  background: darken($color: $primary-color, $amount: 15);
+  background: $primary-color;
+  height: 100%;
 }
 body {
+  background: $primary-color;
   width: 100%;
   color: white;
   display: flex;
@@ -21,8 +23,9 @@ body {
 }
 
 a.btn, a>i, .btn > span {
-  color: $primary-color;
+  color: white;
   font-weight: bold;
+  font-size: 1.5rem;
 }
 
 .tabs {
@@ -41,16 +44,22 @@ a.btn, a>i, .btn > span {
     }
   }
   .indicator {
-    background: $primary-color;
+    background: $secondary-color;
     height: 5px;
   }
 }
 
 .content-area {
-  border: 5px solid $primary-color;
+  border: 5px solid lighten($color: $primary-color, $amount: 5);
   h3 {
     @extend .center;
     padding: 16px 16px;
+  }
+}
+
+@media #{$medium-and-down} {
+  .content-area {
+    width: 90%;
   }
 }
 
@@ -83,7 +92,7 @@ a.btn, a>i, .btn > span {
     justify-content: space-between;
     flex-wrap: wrap;
     flex: 1;
-    padding-bottom: 1em;
+    padding-bottom: 0.5em;
 
     textarea.materialize-textarea {
       flex: 1;
@@ -103,14 +112,14 @@ a.btn, a>i, .btn > span {
     justify-content: space-between;
     flex-wrap: wrap;
     flex: 1;
-    padding-bottom: 1em;
+    padding-bottom: 0.5em;
 
     .progress-bar {
       .progress {
-        background: $secondary-color;
+        background: $primary-color;
 
         .determinate {
-          background: $secondary-color;
+          background: $primary-color-light;
         }
       }
     }

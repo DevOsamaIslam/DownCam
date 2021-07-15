@@ -20,7 +20,7 @@ router.post('/url/', (req, res, next) => {
 })
 
 router.post('/text', (req, res, next) => {
-	let baseURL = req.app.get('env') === 'production' ? req.hostname : `${req.hostname}:3000`
+	let baseURL = req.hostname
 	let text = req.body.text
 	if (!text || !text.trim()) return res.status(404)
 	if (text.length > 10000)
